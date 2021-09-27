@@ -1,0 +1,75 @@
+﻿<Window x:Class="Task6.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Task6"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" Closed="Closed_Click">
+    
+    <Window.Resources>
+        
+        <local:DataConverter x:Key="key_converter"/>
+
+        <DataTemplate x:Key="key_RB_Template">
+            <TextBlock Text="{Binding  Converter={StaticResource key_converter}}"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="key_for_projects">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding ResName}"/>
+                <TextBlock Text=" "/>
+                <TextBlock Text="{Binding StaffCount}"/>
+            </StackPanel>
+        </DataTemplate>
+
+        <CollectionViewSource Source="{Binding}" x:Key="key_view" Filter="FilterProjects"/>
+        
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="792*"/>
+            <ColumnDefinition Width="19*"/>
+        </Grid.ColumnDefinitions>
+        <ListBox x:Name="ListBox1" HorizontalAlignment="Left" Height ="121" Margin="391,0,0,0" VerticalAlignment="Top" Width="372" RenderTransformOrigin="-0.277,0.496" ItemsSource="{Binding}"/>
+        <ListBox x:Name="ListBox2" HorizontalAlignment="Left" Height="112" Margin="391,181,0,0" VerticalAlignment="Top" Width="372" ItemsSource="{Binding Source={StaticResource key_view}}">
+            <ListBox.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Add Default Project" Click="AddDefProj_Click"/>
+                    <MenuItem Header="Add Custom Project" Click="AddCustProj_Click"/>
+                </ContextMenu>
+            </ListBox.ContextMenu>
+        </ListBox>
+        <Menu HorizontalAlignment="Left" Height="35" Margin="10,10,0,0" VerticalAlignment="Top" Width="101" RenderTransformOrigin="0.506,1.365">
+            <MenuItem Header="File">
+                <MenuItem Header="New" Click="New_Click"/>
+                <MenuItem Header="Open" Click="Open_Click"/>
+                <MenuItem Header="Save" Click="Save_Click"/>
+            </MenuItem>
+            <MenuItem Header="Edit">
+                <MenuItem Header="Add Default Project" Click="AddDefProj_Click"/>
+                <MenuItem Header="Add Default Consulting" Click="AddDefCons_Click"/>
+                <MenuItem Header="Add Custom Project" Click="AddCustProj_Click"/>
+                <MenuItem Header="Add Defaults" Click="AddDefs"/>
+                <MenuItem Header="Remove" Click="Remove_Click"/>
+            </MenuItem>
+        </Menu>
+        <TextBox x:Name="TextBox1" HorizontalAlignment="Left" Height="50" Margin="10,71,0,0" TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Top" Width="81"/>
+        <TextBox x:Name="TextBox2" HorizontalAlignment="Left" Height="50" Margin="116,71,0,0" TextWrapping="Wrap" Text="{Binding SurName}" VerticalAlignment="Top" Width="81"/>
+        <TextBlock x:Name="TextBlock1" HorizontalAlignment="Left" Margin="214,71,0,0" TextWrapping="Wrap" Text="{Binding InfCount}" VerticalAlignment="Top" Height="50" Width="81"/>
+        <TextBlock x:Name="TextBlock2" HorizontalAlignment="Left" Margin="300,71,0,0" TextWrapping="Wrap" Text="{Binding IfChanged}" VerticalAlignment="Top" Height="50" Width="81" RenderTransformOrigin="2.037,-0.46"/>
+        <RadioButton Content="Default" HorizontalAlignment="Left" Margin="214,10,0,0" VerticalAlignment="Top" Height="35" Width="81" Click="RB_Default_Click" IsChecked="True"/>
+        <RadioButton Content="Template" HorizontalAlignment="Left" Margin="116,10,0,0" VerticalAlignment="Top" Width="81" Height="35" RenderTransformOrigin="0.537,2.113" Click="RB_Template_Click"/>
+        <TextBlock x:Name="TextBlock3_proj" HorizontalAlignment="Left" Margin="391,331,0,0" TextWrapping="Wrap" Text="{Binding ElementName=ListBox2, Path=SelectedItem.OrgName}" VerticalAlignment="Top" Height="58" Width="91"/>
+        <TextBlock x:Name="TextBlock4_proj" HorizontalAlignment="Left" Margin="505,331,0,0" TextWrapping="Wrap" Text="{Binding ElementName=ListBox2, Path=SelectedItem.DtTm[0]}" VerticalAlignment="Top" Height="58" Width="115"/>
+        <TextBlock x:Name="TextBlock5_proj" HorizontalAlignment="Left" Margin="649,331,0,0" TextWrapping="Wrap" Text="{Binding ElementName=ListBox2, Path=SelectedItem.DtTm[1]}" VerticalAlignment="Top" Height="58" Width="114"/>
+        <ComboBox x:Name="ComboBox1" HorizontalAlignment="Left" Margin="34,181,0,0" VerticalAlignment="Top" Width="120" Height="112"/>
+        <DatePicker x:Name="DatePicker1" HorizontalAlignment="Left" Margin="214,181,0,0" VerticalAlignment="Top" Height="46" Width="120"/>
+        <DatePicker x:Name="DatePicker2" HorizontalAlignment="Left" Margin="214,247,0,0" VerticalAlignment="Top" Height="46" Width="120"/>
+        <TextBox x:Name="TextBox3_cust" HorizontalAlignment="Left" Height="64" Margin="34,331,0,0" TextWrapping="Wrap" Text="Type ResName" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="TextBox4_cust" HorizontalAlignment="Left" Height="64" Margin="214,331,0,0" TextWrapping="Wrap" Text="Type StaffCount" VerticalAlignment="Top" Width="120"/>
+    </Grid>
+
+</Window>
+
